@@ -21,7 +21,7 @@ public class NewsHandler {
 		Thread fetch = new Thread(fetcher);
 		fetch.start();
 		Thread.sleep(5000);
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			new Thread(content).start();
 			Thread.sleep(1000);
 		}
