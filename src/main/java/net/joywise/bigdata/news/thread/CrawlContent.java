@@ -16,17 +16,17 @@ public class CrawlContent implements Runnable {
 			News news = RedisClient.lpop("url_fetch".getBytes());
 			try {
 				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			if (news != null) {
-				if (news.getType().equals("sina")) {
-					WriterQueue.getQueue().put(htmlHandler.sinaHandler(news));
-				} else if (news.getType().equals("netease")) {
-					WriterQueue.getQueue().put(htmlHandler.neteaseHandler(news));
+				if (news != null) {
+					if (news.getType().equals("sina")) {
+						WriterQueue.getQueue().put(htmlHandler.sinaHandler(news));
+					} else if (news.getType().equals("netease")) {
+						WriterQueue.getQueue().put(htmlHandler.neteaseHandler(news));
+					} else if (news.getType().equals("sohu")) {
+						WriterQueue.getQueue().put(htmlHandler.sohuHandler(news));
+					}
 				}
-
+			} catch (Exception e) {
+				logger.error("CrawlContent Thread Exception:" + e.getMessage());
 			}
 		}
 	}

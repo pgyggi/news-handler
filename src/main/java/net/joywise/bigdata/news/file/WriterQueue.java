@@ -5,8 +5,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class WriterQueue {
+import org.apache.log4j.Logger;
 
+public class WriterQueue {
+	private Logger logger = Logger.getLogger(OutputTask.class);
 	private static final int MAX_QUEUE_SIZE = 5000;
 	private LinkedList<String> queue = new LinkedList<String>();
 	private Lock lock = new ReentrantLock();
@@ -26,7 +28,7 @@ public class WriterQueue {
 		lock.lock();
 		try {
 			while (queue.size() == MAX_QUEUE_SIZE) {
-				System.out.println("warning: data queue is full!");
+				logger.info("data queue is full!");
 				notFull.await();
 			}
 			queue.addFirst(phone);
@@ -43,7 +45,7 @@ public class WriterQueue {
 		lock.lock();
 		try {
 			while (queue.size() == 0) {
-				System.out.println("warning: data queue is empty!");
+				logger.info("data queue is empty!");
 				notEmpty.await();
 			}
 			retVal.addAll(queue);

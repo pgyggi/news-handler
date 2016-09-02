@@ -5,7 +5,6 @@ import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
-import org.htmlparser.util.ParserException;
 
 import net.joywise.bigdata.news.bean.News;
 
@@ -29,7 +28,7 @@ public class HtmlHander extends BaseHandler {
 				if (!title.equals("") || !contentString.equals("")) {
 					return new News(n.getUrl(), title, contentString, source, time,n.getType()).toString();
 				}
-			} catch (ParserException e) {
+			} catch (Exception e) {
 				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
@@ -53,11 +52,38 @@ public class HtmlHander extends BaseHandler {
 				if (!title.equals("") || !contentString.equals("")) {
 					return new News(n.getUrl(), title, contentString, source, time,n.getType()).toString();
 				}
-			} catch (ParserException e) {
+			} catch (Exception e) {
 				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
 		return new News().toString();
+	}
+	public String sohuHandler(News n) {
+		String html = getContent(n.getUrl());
+		if (!html.equals("")) {
+			String charset = getCharSet(html);
+			try {
+				Parser nodeParser = Parser.createParser(html, charset);
+				NodeFilter contentFilter = new TagNameFilter("p");
+				NodeList contentList = nodeParser.extractAllNodesThatMatch(contentFilter);
+				String time = n.getTime(), source = "", title = n.getTitle(), contentString = "";
+				try {
+					contentString = trimScript(trimStyle(contentList.toHtml()));
+				} catch (Exception e) {
+					contentString = "";
+				}
+				if (!title.equals("") || !contentString.equals("")) {
+					return new News(n.getUrl(), title, contentString, source, time,n.getType()).toString();
+				}
+			} catch (Exception e) {
+				logger.error(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		return new News().toString();
+	}
+	
+	public static void main(String[] args) {
 	}
 }

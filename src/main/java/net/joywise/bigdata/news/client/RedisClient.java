@@ -145,6 +145,28 @@ public class RedisClient {
 
 		return value;
 	}
+	
+	public static Long del(String key) {
+		Long value = 0l;
+		Jedis jedis = null;
+		try {
+			if (pool == null) {
+				initialPool();
+			}
+			jedis = pool.getResource();
+			value = jedis.del(key);
+		} catch (Exception e) {
+			// 释放redis对象
+			logger.error("del error : " + e);
+			jedis.close();
+			e.printStackTrace();
+		} finally {
+			// 返还到连接池
+			jedis.close();
+		}
+
+		return value;
+	}
 
 	/**
 	 * lpop

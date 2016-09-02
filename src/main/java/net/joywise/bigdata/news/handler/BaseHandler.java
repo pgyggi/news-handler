@@ -53,14 +53,8 @@ public class BaseHandler {
 				entityStringBuilder.append(line + "\n");
 			}
 			return entityStringBuilder.toString();
-		} catch (HttpException e) {
-			logger.error(e.getMessage());
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
+			logger.error(url+":"+e.getMessage());
 		}
 
 		return "";

@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 public class HttpClient {
 	private static Logger logger = Logger.getLogger(HttpClient.class);
 
-	public String getContent(String url) {
+	public String getContent(String url,String charset) {
 		org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
 //		httpClient.getParams().setParameter(HttpMethodParams.USER_AGENT, "wechat_count1.0");
 		httpClient.getParams().setParameter(HttpMethodParams.USER_AGENT,"Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 joywise.net");
@@ -39,7 +39,7 @@ public class HttpClient {
 			httpClient.executeMethod(methodGet);
 			InputStream[] is = cloneInputStream(methodGet.getResponseBodyAsStream(), 2);
 			httpClient.executeMethod(methodGet);
-			bufferedReader = new BufferedReader(new InputStreamReader(is[1], "gbk"), 8 * 1024);
+			bufferedReader = new BufferedReader(new InputStreamReader(is[1], charset), 8 * 1024);
 			String line = null;
 			while ((line = bufferedReader.readLine()) != null) {
 				entityStringBuilder.append(line + "\n");
@@ -53,7 +53,9 @@ public class HttpClient {
 		} 
 		return "";
 	}
-
+	public String getContent(String url){
+		return this.getContent(url, "UTF-8");
+	}
 	public InputStream[] cloneInputStream(InputStream is, int size) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		InputStream[] iss = new InputStream[size];
@@ -76,7 +78,7 @@ public class HttpClient {
 
 	public static void main(String[] args) {
 		HttpClient client = new HttpClient();
-		System.out.println(client.getContent("http://news.163.com/special/0001220O/news_json.js?0.6420350618997459"));
+		System.out.println(client.getContent("http://news.sohu.com/_scroll_newslist/20160902/news.inc","utf-8"));
 		
 	}
 }
