@@ -69,9 +69,8 @@ public class HttpClient {
 				baos.write(buffer, 0, len);
 			}
 			baos.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error("HttpClient Thread Exception:" + e.getMessage());
 		}
 		for (int i = 0; i < size; i++) {
 			iss[i] = new ByteArrayInputStream(baos.toByteArray());

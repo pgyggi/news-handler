@@ -13,6 +13,8 @@ public class NewsHandler {
 	private static Logger logger = Logger.getLogger(NewsHandler.class);
 
 	public static void main(String[] args) throws InterruptedException {
+		//初始化Redis连接池
+		RedisClient.initialPool("192.168.20.14", "6379");
 		logger.info("----------------------start to crawl---------------------------------");
 		String url = "netease	http://news.163.com/special/0001220O/news_json.js?0.6420350618997459";
 		String url1 = "sina	http://roll.news.sina.com.cn/interface/rollnews_ch_out_interface.php?col=89&spec=&type=&ch=03&k=&offset_page=0&offset_num=0&num=20000&asc=&page=1&r=0.06302655208855867";

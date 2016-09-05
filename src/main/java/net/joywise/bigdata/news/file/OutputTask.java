@@ -19,7 +19,7 @@ public class OutputTask implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				sleep(5000);
+				sleep(10000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

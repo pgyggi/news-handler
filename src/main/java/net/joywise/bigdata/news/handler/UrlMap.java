@@ -5,6 +5,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+/**
+ * use {@link RedisMap}
+ * @author Administrator
+ *
+ */
+@Deprecated
 public class UrlMap {
 	private static Map<String, Integer> urls;
 	private static UrlMap urlMap = null;

@@ -41,6 +41,22 @@ public class RedisClient {
 		}
 	}
 
+	public static void initialPool(String host, String port) {
+		try {
+			redisServerIp = host;
+			redisServerPort = Integer.parseInt(port);
+			JedisPoolConfig config = new JedisPoolConfig();
+			config.setMaxIdle(5);
+			config.setMinIdle(2);
+			config.setMaxWaitMillis(1000);
+			config.setTestOnBorrow(true);
+			pool = new JedisPool(config, redisServerIp, redisServerPort, 5000);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("create JedisPool error : " + e);
+		}
+	}
+
 	/**
 	 * 获取数据
 	 * 
@@ -145,7 +161,7 @@ public class RedisClient {
 
 		return value;
 	}
-	
+
 	public static Long del(String key) {
 		Long value = 0l;
 		Jedis jedis = null;
@@ -180,10 +196,10 @@ public class RedisClient {
 			}
 			jedis = pool.getResource();
 			byte[] new1 = jedis.lpop(key);
-			if(new1!=null){
+			if (new1 != null) {
 				Object obj = toObject(new1);
-				if(obj instanceof News){
-					news=(News)obj;
+				if (obj instanceof News) {
+					news = (News) obj;
 				}
 			}
 		} catch (Exception e) {
@@ -361,6 +377,7 @@ public class RedisClient {
 
 	/**
 	 * 二进制转对象
+	 * 
 	 * @param bytes
 	 * @return
 	 */
@@ -378,5 +395,124 @@ public class RedisClient {
 			ex.printStackTrace();
 		}
 		return obj;
+	}
+
+	/**
+	 * 操作redis hash类型
+	 * 
+	 * @param key
+	 * @param hash
+	 * @return
+	 */
+	public static String hmset(String key, Map<String, String> hash) {
+		Jedis jedis = null;
+		String status = "fail";
+		try {
+			if (pool == null) {
+				initialPool();
+			}
+			jedis = pool.getResource();
+			status = jedis.hmset(key, hash);
+			return status;
+		} catch (Exception e) {
+			// 释放redis对象
+			logger.error("Redis hmet error : " + e);
+			jedis.close();
+			e.printStackTrace();
+		} finally {
+			// 返还到连接池
+			jedis.close();
+		}
+		return status;
+	}
+
+	/**
+	 * 将field,value 保存到redis hash类型
+	 * 
+	 * @param key
+	 * @param hash
+	 * @return
+	 */
+	public static Long hset(String key, String field, String value) {
+		Jedis jedis = null;
+		Long status = 0L;
+		try {
+			if (pool == null) {
+				initialPool();
+			}
+			jedis = pool.getResource();
+			status = jedis.hset(key, field, value);
+			return status;
+		} catch (Exception e) {
+			// 释放redis对象
+			logger.error("Redis hset error : " + e);
+			jedis.close();
+			e.printStackTrace();
+		} finally {
+			// 返还到连接池
+			jedis.close();
+		}
+		return status;
+	}
+
+	/**
+	 * 通key,field获取redis中hash类型的值
+	 * 
+	 * @param key
+	 * @param field
+	 * @return
+	 */
+	public static String hget(String key, String field) {
+		Jedis jedis = null;
+		String status = "fail";
+		try {
+			if (pool == null) {
+				initialPool();
+			}
+			jedis = pool.getResource();
+			status = jedis.hget(key, field);
+			return status;
+		} catch (Exception e) {
+			// 释放redis对象
+			logger.error("Redis hget error : " + e);
+			jedis.close();
+			e.printStackTrace();
+		} finally {
+			// 返还到连接池
+			jedis.close();
+		}
+		return status;
+	}
+	/**
+	 * 判断filed类型是否在key中存在
+	 * 
+	 * @param key
+	 * @param field
+	 * @return
+	 */
+	public static Boolean hexists(String key, String field) {
+		Jedis jedis = null;
+		Boolean status = false;
+		try {
+			if (pool == null) {
+				initialPool();
+			}
+			jedis = pool.getResource();
+			status = jedis.hexists(key, field);
+			return status;
+		} catch (Exception e) {
+			// 释放redis对象
+			logger.error("Redis hget error : " + e);
+			jedis.close();
+			e.printStackTrace();
+		} finally {
+			// 返还到连接池
+			jedis.close();
+		}
+		return status;
+	}
+	public static void main(String[] args) {
+		RedisClient.initialPool("192.168.20.14", "6379");
+		System.out.println(RedisClient.hexists("url_exists_key", "http://m.weibo.cn/1672241794/4015654728342113"));
 	}
 }
