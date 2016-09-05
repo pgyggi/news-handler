@@ -46,9 +46,12 @@ public class HttpClient {
 			}
 			return entityStringBuilder.toString();
 		} catch (HttpException e) {
-			logger.error(e.getMessage());
+			logger.error("HttpClient Thread Exception:" + e.getMessage());
 		} catch (IOException e) {
-			logger.error(e.getMessage());
+			logger.error("HttpClient Thread Exception:" + e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			logger.error("HttpClient Thread Exception:" + e.getMessage());
 			e.printStackTrace();
 		} 
 		return "";
