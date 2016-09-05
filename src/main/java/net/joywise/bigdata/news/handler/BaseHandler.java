@@ -132,8 +132,7 @@ public class BaseHandler {
 			}
 			baos.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(this.getClass().getName()+" Exception:"+e.getMessage());
 		}
 		for(int i=0;i<size;i++){
 			iss[i]=new ByteArrayInputStream(baos.toByteArray());

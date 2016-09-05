@@ -17,7 +17,7 @@ public class NewsHandler {
 		String url = "netease	http://news.163.com/special/0001220O/news_json.js?0.6420350618997459";
 		String url1 = "sina	http://roll.news.sina.com.cn/interface/rollnews_ch_out_interface.php?col=89&spec=&type=&ch=03&k=&offset_page=0&offset_num=0&num=20000&asc=&page=1&r=0.06302655208855867";
 		String url2 = "sohu	http://news.sohu.com/_scroll_newslist/{0}/news.inc";
-		String url3 = "http://m.weibo.cn/container/getIndex?containerid=102803";
+		String url3 = "weibo	http://m.weibo.cn/container/getIndex?containerid=102803";
 		// clear redis queue key url_fetch
 		RedisClient.del("url_fetch");
 		// remove result.tsv file
@@ -31,10 +31,11 @@ public class NewsHandler {
 		fetcher.addSeed(url);
 		fetcher.addSeed(url1);
 		fetcher.addSeed(url2);
+		fetcher.addSeed(url3);
 		Thread fetch = new Thread(fetcher);
 		fetch.start();
 		Thread.sleep(2000);
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 2; i++) {
 			new Thread(content).start();
 			Thread.sleep(1000);
 		}

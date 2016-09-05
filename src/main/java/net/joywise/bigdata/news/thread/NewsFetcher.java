@@ -23,6 +23,7 @@ public class NewsFetcher implements Runnable {
 	private final String NETEASE = "netease";
 	private final String SINA = "sina";
 	private final String SOHU = "sohu";
+	private final String WEIBO = "weibo";
 	private final String CONFIG_SPLIT = "\t";
 
 	public void run() {
@@ -47,6 +48,11 @@ public class NewsFetcher implements Runnable {
 						String sohuContent = client.getContent(url,"utf-8");
 						List<News> newsSohu = JsonHandler.sohuHandler(sohuContent);
 						news.addAll(newsSohu);
+					}else if (newsType[0].equals(WEIBO)) {
+						String url = formatSeedUrl(newsType[1], newsType[0]);
+						String weiboContent = client.getContent(url,"utf-8");
+						List<News> newsWeibo = JsonHandler.weiboHandler(weiboContent);
+						news.addAll(newsWeibo);
 					}
 					logger.info("news size:" + news.size());
 					for (News n : news) {
@@ -91,6 +97,9 @@ public class NewsFetcher implements Runnable {
 		if (type.equals(SOHU)) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			return url.replace("{0}", sdf.format(new Date()));
+		}
+		if (type.equals(WEIBO)) {
+			return url;
 		}
 		return url;
 	}

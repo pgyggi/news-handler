@@ -61,9 +61,29 @@ public class JsonHandler  extends BaseHandler{
 
 		return newsLists;
 	}
+
+	@SuppressWarnings("deprecation")
+	public static List<News> weiboHandler(String jsonStr) throws UnsupportedEncodingException {
+		JSONObject jsonObject = JSONObject.fromObject(jsonStr);
+		JSONArray newsList = jsonObject.getJSONArray("cards");
+		List<News> newsLists = new ArrayList<News>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		for (int i = 0; i < newsList.size(); i++) {
+			JSONObject JSONObject = newsList.getJSONObject(i);
+			News news = new News(JSONObject.getString("scheme"),
+					JSONObject.getJSONObject("mblog").getJSONObject("user").getString("screen_name"),
+					JSONObject.getJSONObject("mblog").getString("text"), "",
+					sdf.format(Date.parse((JSONObject.getJSONObject("mblog").getString("created_at")))), "weibo");
+			newsLists.add(news);
+		}
+		return newsLists;
+	}
 public static void main(String[] args) throws UnsupportedEncodingException {
-	String json="http://news.sohu.com/_scroll_newslist/20160902/news.inc";
+	String json="http://m.weibo.cn/container/getIndex?containerid=102803";
 	JsonHandler h = new JsonHandler();
-	System.out.println(sohuHandler(h.getContent(json)).size());
+	List<News> news = weiboHandler(h.getContent(json));
+	for(int i=0;i<news.size();i++){
+		System.out.println(news.get(i).toString());
+	}
 }
 }

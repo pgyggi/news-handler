@@ -23,6 +23,8 @@ public class CrawlContent implements Runnable {
 						WriterQueue.getQueue().put(htmlHandler.neteaseHandler(news));
 					} else if (news.getType().equals("sohu")) {
 						WriterQueue.getQueue().put(htmlHandler.sohuHandler(news));
+					}else if (news.getType().equals("weibo")) {
+						WriterQueue.getQueue().put(news.toString());
 					}
 				}
 			} catch (Exception e) {
