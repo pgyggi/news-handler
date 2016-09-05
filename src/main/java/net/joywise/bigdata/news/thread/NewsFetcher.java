@@ -54,13 +54,13 @@ public class NewsFetcher implements Runnable {
 						List<News> newsWeibo = JsonHandler.weiboHandler(weiboContent);
 						news.addAll(newsWeibo);
 					}
-					logger.info("news size:" + news.size());
-					for (News n : news) {
-						if (!map.isFetched(n.getUrl())) {
-							RedisClient.rpush("url_fetch", n);
-						}
-						map.addUrl(n.getUrl());
+				}
+				logger.info("news size:" + news.size());
+				for (News n : news) {
+					if (!map.isFetched(n.getUrl())) {
+						RedisClient.rpush("url_fetch", n);
 					}
+					map.addUrl(n.getUrl());
 				}
 				logger.info("request news thread end,after 2 min repeat!");
 				logger.info("Map size:" + map.size());
