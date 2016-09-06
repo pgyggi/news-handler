@@ -15,17 +15,12 @@ public class RedisMap {
 		return RedisClient.hexists(mapKey, url);
 	}
 
-	public static void addUrl(Map<String, String> hash) {
-		if (hash.size() > 0) {
-			RedisClient.hmset(mapKey, hash);
+	public static void addUrl(String field) {
+		if (field != null && !field.equals("")) {
+			RedisClient.hset(mapKey, field, "1");
 		}
-		logger.info("sync url to redis: " + hash.size());
 	}
 
-	public static void addUrl(String url){
-		RedisClient.hset(mapKey, url, "1");
-	}
-	
 	public static void addUrlMap(Map<String, String> hash) {
 		Map<String, String> syncRedisMap = new HashMap<String, String>();
 		if (hash != null && hash.size() > 0) {

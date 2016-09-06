@@ -4,9 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -40,35 +38,35 @@ public class NewsFetcher implements Runnable {
 						String neteaseContent = client.getContent(url, "gbk");
 						List<News> newsNetease = JsonHandler.neteaseHandler(neteaseContent);
 						news.addAll(newsNetease);
+						logger.info(NETEASE + " count: " + newsNetease.size());
 					} else if (newsType[0].equals(SINA)) {
 						String url = formatSeedUrl(newsType[1], newsType[0]);
 						String sinaContent = client.getContent(url, "gbk");
 						List<News> newsSina = JsonHandler.sinaHandler(sinaContent);
 						news.addAll(newsSina);
+						logger.info(SINA + " count: " + newsSina.size());
 					} else if (newsType[0].equals(SOHU)) {
 						String url = formatSeedUrl(newsType[1], newsType[0]);
 						String sohuContent = client.getContent(url, "utf-8");
 						List<News> newsSohu = JsonHandler.sohuHandler(sohuContent);
 						news.addAll(newsSohu);
+						logger.info(SOHU + " count: " + newsSohu.size());
 					} else if (newsType[0].equals(WEIBO)) {
 						String url = formatSeedUrl(newsType[1], newsType[0]);
 						String weiboContent = client.getContent(url, "utf-8");
 						List<News> newsWeibo = JsonHandler.weiboHandler(weiboContent);
 						news.addAll(newsWeibo);
+						logger.info(WEIBO + " count: " + newsWeibo.size());
 					}
 				}
 				logger.info("new fetch news size:" + news.size());
-				Map<String, String> urls = new HashMap<String, String>();
 				for (News n : news) {
 					if (!RedisMap.isFetched(n.getUrl())) {
 						RedisClient.rpush("url_fetch", n);
-						urls.put(n.getUrl(), "1");
+						RedisMap.addUrl(n.getUrl());
 						logger.info(n.getUrl() + ":" + "is not exists!");
 					}
 				}
-				// 将已经保存到抓取队列的URL，同步到队列中
-				RedisMap.addUrl(urls);
-				urls.clear();
 				logger.info("request news thread end,after 1 min repeat!");
 				Thread.sleep(1000 * 60);
 			} catch (InterruptedException e) {
