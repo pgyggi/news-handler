@@ -25,6 +25,7 @@ public class NewsFetcher implements Runnable {
 	private final String SOHU = "sohu";
 	private final String WEIBO = "weibo";
 	private final String CONFIG_SPLIT = "\t";
+	private int second = 0;
 
 	public void run() {
 		while (true) {
@@ -67,8 +68,8 @@ public class NewsFetcher implements Runnable {
 						logger.info(n.getUrl() + ":" + "is not exists!");
 					}
 				}
-				logger.info("request news thread end,after 1 min repeat!");
-				Thread.sleep(1000 * 60);
+				logger.info("request news thread end,after " + second + " seconds repeat!");
+				Thread.sleep(1000 * second);
 			} catch (InterruptedException e) {
 				logger.error("NewsFetcher Thread Exception:" + e.getMessage());
 				e.printStackTrace();
@@ -91,6 +92,10 @@ public class NewsFetcher implements Runnable {
 
 	public List<String> getSeeds() {
 		return urlSeeds;
+	}
+	
+	public void setInterval(int second) {
+		this.second = second;
 	}
 
 	private String formatSeedUrl(String url, String type) {

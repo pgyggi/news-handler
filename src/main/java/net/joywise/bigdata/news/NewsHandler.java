@@ -15,6 +15,7 @@ public class NewsHandler {
 		String redisServer = args[0];
 		String redisPort = args[1];
 		Integer crawlThread = Integer.parseInt(args[2]);
+		Integer second = Integer.parseInt(args[3]);
 		logger.info("args:" + args[0] + "," + args[1] + "," + args[2]);
 		//初始化Redis连接池
 		RedisClient.initialPool(redisServer, redisPort);
@@ -30,6 +31,7 @@ public class NewsHandler {
 		fetcher.addSeed(url1);
 		fetcher.addSeed(url2);
 		fetcher.addSeed(url3);
+		fetcher.setInterval(second);
 		Thread fetch = new Thread(fetcher);
 		fetch.start();
 		Thread.sleep(2000);
