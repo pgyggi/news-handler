@@ -62,18 +62,16 @@ public class JsonHandler  extends BaseHandler{
 		return newsLists;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static List<News> weiboHandler(String jsonStr) throws UnsupportedEncodingException {
 		JSONObject jsonObject = JSONObject.fromObject(jsonStr);
 		JSONArray newsList = jsonObject.getJSONArray("cards");
 		List<News> newsLists = new ArrayList<News>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		for (int i = 0; i < newsList.size(); i++) {
 			JSONObject JSONObject = newsList.getJSONObject(i);
 			News news = new News(JSONObject.getString("scheme"),
 					JSONObject.getJSONObject("mblog").getJSONObject("user").getString("screen_name"),
 					JSONObject.getJSONObject("mblog").getString("text"), "",
-					sdf.format(Date.parse((JSONObject.getJSONObject("mblog").getString("created_at")))), "weibo");
+					JSONObject.getJSONObject("mblog").getString("created_at"), "weibo");
 			newsLists.add(news);
 		}
 		return newsLists;
