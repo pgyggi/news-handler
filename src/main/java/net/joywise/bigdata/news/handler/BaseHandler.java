@@ -69,7 +69,7 @@ public class BaseHandler {
 				return matcher.group(1);
 			}
 		}
-		return "UTF-8";
+		return "GBK";
 	}
 
 	public String getCharSet(InputStream content) throws IOException {
@@ -83,7 +83,7 @@ public class BaseHandler {
 			if (matcher.find())
 				return matcher.group(1);
 		}
-		return "UTF-8";
+		return "GBK";
 	}
 
 	public String charReplace(String charSequence) {
