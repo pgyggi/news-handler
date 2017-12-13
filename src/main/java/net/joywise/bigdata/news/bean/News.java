@@ -2,6 +2,9 @@ package net.joywise.bigdata.news.bean;
 
 import java.io.Serializable;
 
+import org.apache.log4j.Logger;
+
+import com.alibaba.fastjson.JSON;  
 public class News implements Serializable{
 	/**
 	 * 
@@ -13,6 +16,7 @@ public class News implements Serializable{
 	private String source;
 	private String time;
 	private String type;
+	private static Logger logger = Logger.getLogger(News.class);
 
 	public News() {
 		this.url = "";
@@ -89,6 +93,10 @@ public class News implements Serializable{
 	public String toString() {
 		return url + "\t" + charReplace(title) + "\t" + charReplace(body) + "\t" + charReplace(source) + "\t"
 				+ charReplace(time) + "\t" + type;
+	}
+	public String toJson() {
+		 String jsonString = JSON.toJSONString(this);
+		 return jsonString;
 	}
 
 }

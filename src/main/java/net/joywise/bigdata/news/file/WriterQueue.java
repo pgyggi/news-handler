@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.apache.log4j.Logger;
 
 public class WriterQueue {
-	private Logger logger = Logger.getLogger(OutputTask.class);
+	private static Logger logger = Logger.getLogger(OutputTask.class);
 	private static final int MAX_QUEUE_SIZE = 5000;
 	private LinkedList<String> queue = new LinkedList<String>();
 	private Lock lock = new ReentrantLock();

@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 
 
 public class BaseHandler {
-	private Logger logger = Logger.getLogger(BaseHandler.class);
+	private static Logger logger = Logger.getLogger(BaseHandler.class);
 
 	public String getContent(String url) {
 		HttpClient httpClient = new HttpClient();

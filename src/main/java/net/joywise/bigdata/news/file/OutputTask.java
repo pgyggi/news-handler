@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import org.apache.log4j.Logger;
 
 public class OutputTask implements Runnable {
-	private Logger logger = Logger.getLogger(OutputTask.class);
+	private static Logger logger = Logger.getLogger(OutputTask.class);
 	private String fileName;
 
 	public OutputTask(String fileName) {

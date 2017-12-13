@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,11 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-public class RedisClient {
+public class RedisClient implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -474227189189900404L;
 	private static JedisPool pool = null;
 	private static Logger logger = Logger.getLogger(RedisClient.class);
 	private static String redisServerIp = null;

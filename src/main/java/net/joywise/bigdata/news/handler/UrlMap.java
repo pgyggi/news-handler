@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 public class UrlMap {
 	private static Map<String, Integer> urls;
 	private static UrlMap urlMap = null;
-	private Logger logger = Logger.getLogger(UrlMap.class);
+	private static Logger logger = Logger.getLogger(UrlMap.class);
 
 	private UrlMap() {
 	}

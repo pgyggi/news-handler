@@ -9,9 +9,9 @@ import org.htmlparser.util.NodeList;
 import net.joywise.bigdata.news.bean.News;
 
 public class HtmlHander extends BaseHandler {
-	private Logger logger = Logger.getLogger(HtmlHander.class);
+	private static Logger logger = Logger.getLogger(HtmlHander.class);
 
-	public String neteaseHandler(News n) {
+	public News neteaseHandler(News n) {
 		String html = getContent(n.getUrl());
 		if (!html.equals("")) {
 			String charset = getCharSet(html);
@@ -26,16 +26,16 @@ public class HtmlHander extends BaseHandler {
 					contentString = "";
 				}
 				if (!title.equals("") || !contentString.equals("")) {
-					return new News(n.getUrl(), title, contentString, source, time,n.getType()).toString();
+					return new News(n.getUrl(), title, contentString, source, time,n.getType());
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
-		return new News().toString();
+		return new News();
 	}
-	public String sinaHandler(News n) {
+	public News sinaHandler(News n) {
 		String html = getContent(n.getUrl());
 		if (!html.equals("")) {
 			String charset = getCharSet(html);
@@ -50,16 +50,16 @@ public class HtmlHander extends BaseHandler {
 					contentString = "";
 				}
 				if (!title.equals("") || !contentString.equals("")) {
-					return new News(n.getUrl(), title, contentString, source, time,n.getType()).toString();
+					return new News(n.getUrl(), title, contentString, source, time,n.getType());
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
-		return new News().toString();
+		return new News();
 	}
-	public String sohuHandler(News n) {
+	public News sohuHandler(News n) {
 		String html = getContent(n.getUrl());
 		if (!html.equals("")) {
 			String charset = getCharSet(html);
@@ -74,14 +74,14 @@ public class HtmlHander extends BaseHandler {
 					contentString = "";
 				}
 				if (!title.equals("") || !contentString.equals("")) {
-					return new News(n.getUrl(), title, contentString, source, time,n.getType()).toString();
+					return new News(n.getUrl(), title, contentString, source, time,n.getType());
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage());
 				e.printStackTrace();
 			}
 		}
-		return new News().toString();
+		return new News();
 	}
 	
 	public static void main(String[] args) {

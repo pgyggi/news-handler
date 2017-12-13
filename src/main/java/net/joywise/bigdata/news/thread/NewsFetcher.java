@@ -1,5 +1,6 @@
 package net.joywise.bigdata.news.thread;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,8 +16,12 @@ import net.joywise.bigdata.news.handler.JsonHandler;
 import net.joywise.bigdata.news.handler.RedisMap;
 import net.sf.json.JSONException;
 
-public class NewsFetcher implements Runnable {
+public class NewsFetcher implements Runnable,Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 532366801991477320L;
 	private List<String> urlSeeds = new ArrayList<String>();
 	private HttpClient client = new HttpClient();
 	private static Logger logger = Logger.getLogger(NewsFetcher.class);
