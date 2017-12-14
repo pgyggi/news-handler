@@ -76,13 +76,14 @@ public class NewsFetcher implements Runnable,Serializable {
 				logger.info("request news thread end,after " + second + " seconds repeat!");
 				Thread.sleep(1000 * second);
 			} catch (InterruptedException e) {
-				logger.error("NewsFetcher Thread Exception:" + e.getMessage());
+				logger.error("NewsFetcher InterruptedException:" + e.getMessage());
 				e.printStackTrace();
 			} catch (UnsupportedEncodingException e) {
-				logger.error("NewsFetcher Thread Exception:" + e.getMessage());
+				logger.error("NewsFetcher UnsupportedEncodingException:" + e.getMessage());
 				e.printStackTrace();
 			} catch (JSONException e) {
-				logger.error("NewsFetcher Thread Exception:" + e.getMessage());
+				logger.error("NewsFetcher JSONException :" + e.getMessage());
+				e.printStackTrace();
 			} catch (Exception e) {
 				logger.error("NewsFetcher Thread Exception:" + e.getMessage());
 				e.printStackTrace();

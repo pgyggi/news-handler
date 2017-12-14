@@ -1,6 +1,8 @@
 package net.joywise.bigdata.news.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
@@ -15,6 +17,7 @@ public class News implements Serializable{
 	private String body;
 	private String source;
 	private String time;
+	private String crawl_time;
 	private String type;
 	private static Logger logger = Logger.getLogger(News.class);
 
@@ -24,15 +27,17 @@ public class News implements Serializable{
 		this.body = "";
 		this.source = "";
 		this.time = "";
+		this.crawl_time="";
 		this.type="";
 	}
 
-	public News(String url, String title, String body, String source, String time,String type) {
+	public News(String url, String title, String body, String source, String time,String crawl_time,String type) {
 		this.url = url;
 		this.title = title;
 		this.body = body;
 		this.source = source;
 		this.time = time;
+		this.crawl_time = crawl_time;
 		this.type = type;
 	}
 
@@ -72,6 +77,14 @@ public class News implements Serializable{
 		return time;
 	}
 	
+	public String getCrawlTime() {
+		return crawl_time;
+	}
+
+	public void setCrawlTime(String crawl_time) {
+		this.crawl_time = crawl_time;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -92,11 +105,11 @@ public class News implements Serializable{
 	@Override
 	public String toString() {
 		return url + "\t" + charReplace(title) + "\t" + charReplace(body) + "\t" + charReplace(source) + "\t"
-				+ charReplace(time) + "\t" + type;
+				+ charReplace(time) + "\t" + crawl_time + "\t" + type;
 	}
 	public String toJson() {
 		 String jsonString = JSON.toJSONString(this);
-		 return jsonString;
+		 return charReplace(jsonString);
 	}
 
 }

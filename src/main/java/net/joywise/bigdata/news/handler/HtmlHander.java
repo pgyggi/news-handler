@@ -26,7 +26,7 @@ public class HtmlHander extends BaseHandler {
 					contentString = "";
 				}
 				if (!title.equals("") || !contentString.equals("")) {
-					return new News(n.getUrl(), title, contentString, source, time,n.getType());
+					return new News(n.getUrl(), title, contentString, source, time,n.getCrawlTime(),n.getType());
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage());
@@ -50,7 +50,7 @@ public class HtmlHander extends BaseHandler {
 					contentString = "";
 				}
 				if (!title.equals("") || !contentString.equals("")) {
-					return new News(n.getUrl(), title, contentString, source, time,n.getType());
+					return new News(n.getUrl(), title, contentString, source, time,n.getCrawlTime(),n.getType());
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage());
@@ -74,7 +74,7 @@ public class HtmlHander extends BaseHandler {
 					contentString = "";
 				}
 				if (!title.equals("") || !contentString.equals("")) {
-					return new News(n.getUrl(), title, contentString, source, time,n.getType());
+					return new News(n.getUrl(), title, contentString, source, time,n.getCrawlTime(),n.getType());
 				}
 			} catch (Exception e) {
 				logger.error(e.getMessage());

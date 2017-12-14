@@ -11,7 +11,6 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class JsonHandler  extends BaseHandler{
-
 	public static List<News> neteaseHandler(String jsonStr) {
 		String htmlRep = jsonStr.replace("var data=", "").replace("};", "}");
 		JSONObject jsonObject = JSONObject.fromObject(htmlRep);
@@ -21,7 +20,7 @@ public class JsonHandler  extends BaseHandler{
 			JSONArray newArray = newsArray.getJSONArray(i);
 			for (int j = 0; j < newArray.size(); j++) {
 				JSONObject obj = newArray.getJSONObject(j);
-				News news = new News(obj.get("l").toString(), obj.get("t").toString(), "", "", obj.get("p").toString(),"netease");
+				News news = new News(obj.get("l").toString(), obj.get("t").toString(), "", "", obj.get("p").toString(),"","netease");
 				newsList.add(news);
 			}
 		}
@@ -37,7 +36,7 @@ public class JsonHandler  extends BaseHandler{
 		for (int i = 0; i < newsList.size(); i++) {
 			News news = new News(newsList.getJSONObject(i).get("url").toString(),
 								 newsList.getJSONObject(i).get("title").toString(), "", "",
-								 sf.format(new Date(Long.valueOf(newsList.getJSONObject(i).get("time").toString() + "000"))),"sina");
+								 sf.format(new Date(Long.valueOf(newsList.getJSONObject(i).get("time").toString() + "000"))),"","sina");
 			newsLists.add(news);
 		}
 		return newsLists;
@@ -54,7 +53,7 @@ public class JsonHandler  extends BaseHandler{
 				News news = new News(
 						newsListArray.getString(2), 
 						newsListArray.getString(1), "", "",
-						newsListArray.getString(3), "sohu");
+						newsListArray.getString(3), "","sohu");
 				newsLists.add(news);
 			}
 		}
@@ -63,15 +62,16 @@ public class JsonHandler  extends BaseHandler{
 	}
 
 	public static List<News> weiboHandler(String jsonStr) throws UnsupportedEncodingException {
-		JSONObject jsonObject = JSONObject.fromObject(jsonStr);
+		JSONObject jsonObject = JSONObject.fromObject(jsonStr).getJSONObject("data");
 		JSONArray newsList = jsonObject.getJSONArray("cards");
+		System.out.println("++++"+newsList.size());
 		List<News> newsLists = new ArrayList<News>();
 		for (int i = 0; i < newsList.size(); i++) {
 			JSONObject JSONObject = newsList.getJSONObject(i);
 			News news = new News(JSONObject.getString("scheme"),
 					JSONObject.getJSONObject("mblog").getJSONObject("user").getString("screen_name"),
 					JSONObject.getJSONObject("mblog").getString("text"), "",
-					JSONObject.getJSONObject("mblog").getString("created_at"), "weibo");
+					JSONObject.getJSONObject("mblog").getString("created_at"),"","weibo");
 			newsLists.add(news);
 		}
 		return newsLists;
