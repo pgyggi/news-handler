@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
@@ -116,7 +117,9 @@ public class NewsFetcher implements Runnable,Serializable {
 			return url.replace("{0}", sdf.format(new Date()));
 		}
 		if (type.equals(WEIBO)) {
-			return url;
+			Random random=new Random();
+			int result=random.nextInt(1000);
+			return url.replace("{0}", result+"");
 		}
 		return url;
 	}

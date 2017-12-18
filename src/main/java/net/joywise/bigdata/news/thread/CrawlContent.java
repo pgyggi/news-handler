@@ -46,6 +46,7 @@ public class CrawlContent implements Runnable {
 						news.setCrawlTime(df.format(new Date()));
 						news.setTime(DatetimeUtil.datetime(news.getTime()));
 						WriterQueue.getQueue().put(news.toString());
+						news.setTitle(news.getBody());
 						EsClient.add("diting", "news", null, news.toJson());
 					}
 				}

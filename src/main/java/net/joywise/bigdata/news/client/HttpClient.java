@@ -20,7 +20,7 @@ public class HttpClient {
 	public String getContent(String url,String charset) {
 		org.apache.commons.httpclient.HttpClient httpClient = new org.apache.commons.httpclient.HttpClient();
 //		httpClient.getParams().setParameter(HttpMethodParams.USER_AGENT, "wechat_count1.0");
-		httpClient.getParams().setParameter(HttpMethodParams.USER_AGENT,"Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 joywise.net");
+		httpClient.getParams().setParameter(HttpMethodParams.USER_AGENT,"Mozilla/5.0  AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1 joywise.net");
 		HttpConnectionManager httpConnManager = httpClient.getHttpConnectionManager();
 		BufferedReader bufferedReader;
 		StringBuilder entityStringBuilder = new StringBuilder();
