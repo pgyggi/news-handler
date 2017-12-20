@@ -26,24 +26,24 @@ public class CrawlContent implements Runnable {
 				if (news != null) {
 					if (news.getType().equals("sina")) {
 						News n = htmlHandler.sinaHandler(news);
-						n.setCrawlTime(df.format(new Date()));
+						n.setCrawl_time(df.format(new Date()));
 						n.setTime(DatetimeUtil.datetime(n.getTime()));
 						WriterQueue.getQueue().put(n.toString());
 						EsClient.add("diting", "news", null, n.toJson());
 					} else if (news.getType().equals("netease")) {
 						News n = htmlHandler.neteaseHandler(news);
-						n.setCrawlTime(df.format(new Date()));
+						n.setCrawl_time(df.format(new Date()));
 						n.setTime(DatetimeUtil.datetime(n.getTime()));
 						WriterQueue.getQueue().put(n.toString());
 						EsClient.add("diting", "news", null, n.toJson());
 					} else if (news.getType().equals("sohu")) {
 						News n = htmlHandler.sohuHandler(news);
-						n.setCrawlTime(df.format(new Date()));
+						n.setCrawl_time(df.format(new Date()));
 						n.setTime(DatetimeUtil.datetime(n.getTime()));
 						WriterQueue.getQueue().put(n.toString());
 						EsClient.add("diting", "news", null, n.toJson());
 					} else if (news.getType().equals("weibo")) {
-						news.setCrawlTime(df.format(new Date()));
+						news.setCrawl_time(df.format(new Date()));
 						news.setTime(DatetimeUtil.datetime(news.getTime()));
 						WriterQueue.getQueue().put(news.toString());
 						news.setTitle(news.getBody());

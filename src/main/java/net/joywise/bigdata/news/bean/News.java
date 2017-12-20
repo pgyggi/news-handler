@@ -77,11 +77,11 @@ public class News implements Serializable{
 		return time;
 	}
 	
-	public String getCrawlTime() {
+	public String getCrawl_time() {
 		return crawl_time;
 	}
 
-	public void setCrawlTime(String crawl_time) {
+	public void setCrawl_time(String crawl_time) {
 		this.crawl_time = crawl_time;
 	}
 
