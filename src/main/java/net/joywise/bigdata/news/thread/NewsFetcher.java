@@ -66,14 +66,6 @@ public class NewsFetcher implements Runnable,Serializable {
 						logger.info(WEIBO + " count: " + newsWeibo.size());
 					}
 				}
-				logger.info("new fetch news size:" + news.size());
-				for (News n : news) {
-					if (!RedisMap.isFetched(n.getUrl())) {
-						RedisClient.rpush("url_fetch", n);
-						RedisMap.addUrl(n.getUrl());
-						logger.info(n.getUrl() + ":" + "is not exists!");
-					}
-				}
 				logger.info("request news thread end,after " + second + " seconds repeat!");
 				Thread.sleep(1000 * second);
 			} catch (InterruptedException e) {
@@ -88,6 +80,14 @@ public class NewsFetcher implements Runnable,Serializable {
 			} catch (Exception e) {
 				logger.error("NewsFetcher Thread Exception:" + e.getMessage());
 				e.printStackTrace();
+			}
+			logger.info("new fetch news size:" + news.size());
+			for (News n : news) {
+				if (!RedisMap.isFetched(n.getUrl())) {
+					RedisClient.rpush("url_fetch", n);
+					RedisMap.addUrl(n.getUrl());
+					logger.info(n.getUrl() + ":" + "is not exists!");
+				}
 			}
 		}
 
